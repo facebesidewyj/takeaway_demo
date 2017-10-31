@@ -32,7 +32,10 @@
     <div v-show="detailShow" class="detail">
       <div class="detail-wrapper clearfix">
         <div class="detail-main">
-
+          <h1 class="name">{{seller.name}}</h1>
+          <div class="star-wrapper">
+            <star :size="48" :score="seller.score"></star>
+          </div>
         </div>
       </div>
       <div class="detail-close" @click="detailClose">
@@ -43,6 +46,8 @@
 </template>
 
 <script>
+  import star from 'components/star/star';
+
   export default{
     props: {
       seller: {
@@ -64,6 +69,9 @@
     },
     created() {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+    },
+    components: {
+      star
     }
   };
 </script>
@@ -93,7 +101,7 @@
           vertical-align: top
           width: 30px
           height: 18px
-          bd-image('brand')
+          bg-image('brand')
           background-size: 30px 18px
           background-repeat: no-repeat
         .name
@@ -116,15 +124,15 @@
           background-size: 12px 12px
           background-repeat: no-repeat
           &.decrease
-            bd-image('decrease_1')
+            bg-image('decrease_1')
           &.discount
-            bd-image('discount_1')
+            bg-image('discount_1')
           &.guarantee
-            bd-image('guarantee_1')
+            bg-image('guarantee_1')
           &.invocie
-            bd-image('invoice_1')
+            bg-image('invoice_1')
           &.special
-            bd-image('special_1')
+            bg-image('special_1')
         .text
           display: inline-block
           margin-left 4px
@@ -162,7 +170,7 @@
       width: 22px
       vertical-align: top
       margin-top: 9px
-      bd-image('bulletin')
+      bg-image('bulletin')
       background-repeat: no-repeat
       background-size: 22px 12px
     .bulletin-text
@@ -191,10 +199,20 @@
     background-color: rgba(7, 17, 27, 0.8)
     overflow: auto
     .detail-wrapper
+      width: 100%
       min-height: 100%
       .detail-main
         margin-top: 64px
         padding-bottom: 64px
+        .name
+          line-height: 16px
+          font-size: 16px
+          font-weight: 700
+          text-align: center
+        .star-wrapper
+          margin-top: 16px
+          padding: 2px 0
+          text-align: center
     .detail-close
         position: relative
         margin: -64px auto 0 auto
