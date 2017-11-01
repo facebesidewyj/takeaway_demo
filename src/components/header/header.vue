@@ -29,24 +29,38 @@
     <div class="background">
       <img width="100%" height="100%" :src="seller.avatar" alt="背景图片">
     </div>
-    <div v-show="detailShow" class="detail">
-      <div class="detail-wrapper clearfix">
-        <div class="detail-main">
-          <h1 class="name">{{seller.name}}</h1>
-          <div class="star-wrapper">
-            <star :size="48" :score="seller.score"></star>
+    <transition name="fade">
+      <div v-show="detailShow" class="detail">
+        <div class="detail-wrapper clearfix">
+          <div class="detail-main">
+            <h1 class="name">{{seller.name}}</h1>
+            <div class="star-wrapper">
+              <star :size="48" :score="seller.score"></star>
+            </div>
+            <flexLine text="优惠信息"></flexLine>
+            <ul class="supports" v-if="seller.supports">
+              <li class="supports-item" v-for="item in seller.supports">
+                <span class="icon" :class="classMap[item.type]"></span>
+                <span class="text">{{item.description}}</span>
+              </li>
+            </ul>
+            <flexLine text="商家公告"></flexLine>
+            <div class="bulletin">
+              <p class="content">{{seller.bulletin}}</p>
+            </div>
           </div>
         </div>
+        <div class="detail-close" @click="detailClose">
+          <i class="icon-close"></i>
+        </div>
       </div>
-      <div class="detail-close" @click="detailClose">
-        <i class="icon-close"></i>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script>
   import star from 'components/star/star';
+  import flexLine from 'components/line/line';
 
   export default{
     props: {
@@ -71,7 +85,8 @@
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     },
     components: {
-      star
+      star,
+      flexLine
     }
   };
 </script>
@@ -129,7 +144,7 @@
             bg-image('discount_1')
           &.guarantee
             bg-image('guarantee_1')
-          &.invocie
+          &.invoice
             bg-image('invoice_1')
           &.special
             bg-image('special_1')
@@ -196,8 +211,16 @@
     z-index: 100
     height: 100%
     width: 100%
-    background-color: rgba(7, 17, 27, 0.8)
     overflow: auto
+    backdrop-filter: blur(10px)
+    background-color: rgba(7, 17, 27, 0.8)
+    transition: all 0.5s
+    &.fade-enter-to
+      opacity: 1
+      background-color: rgba(7, 17, 27, 0.8)
+    &.fade-enter, &.fade-leave
+      opacity: 0
+      background-color: rgba(7, 17, 27, 0)
     .detail-wrapper
       width: 100%
       min-height: 100%
@@ -213,6 +236,43 @@
           margin-top: 16px
           padding: 2px 0
           text-align: center
+        .supports
+          width: 80%
+          margin: 0 auto
+          padding: 0 12px
+          font-size: 0
+          .supports-item
+            margin-bottom: 12px
+            &:last-child
+              margin-bottom: 0
+            .icon
+              display: inline-block
+              width: 16px
+              height: 16px
+              margin-right: 6px
+              vertical-align: top
+              background-size: 16px 16px
+              background-repeat: no-repeat
+              &.decrease
+                bg-image('decrease_2')
+              &.discount
+                bg-image('discount_2')
+              &.guarantee
+                bg-image('guarantee_2')
+              &.invoice
+                bg-image('invoice_2')
+              &.special
+                bg-image('special_2')
+            .text
+              font-size: 12px
+              line-height: 16px
+        .bulletin
+          width: 80%
+          margin: 0 auto
+          .content
+            padding: 0 12px
+            font-size: 12px
+            line-height: 24px
     .detail-close
         position: relative
         margin: -64px auto 0 auto
