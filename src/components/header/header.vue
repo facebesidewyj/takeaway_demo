@@ -138,15 +138,15 @@
           height 12px
           background-size: 12px 12px
           background-repeat: no-repeat
-          &.decrease
+          &.decrease-1
             bg-image('decrease_1')
-          &.discount
+          &.discount-1
             bg-image('discount_1')
-          &.guarantee
+          &.guarantee-1
             bg-image('guarantee_1')
-          &.invoice
+          &.invoice-1
             bg-image('invoice_1')
-          &.special
+          &.special-1
             bg-image('special_1')
         .text
           display: inline-block
@@ -253,15 +253,15 @@
               vertical-align: top
               background-size: 16px 16px
               background-repeat: no-repeat
-              &.decrease
+              &.decrease-1
                 bg-image('decrease_2')
-              &.discount
+              &.discount-1
                 bg-image('discount_2')
-              &.guarantee
+              &.guarantee-1
                 bg-image('guarantee_2')
-              &.invoice
+              &.invoice-1
                 bg-image('invoice_2')
-              &.special
+              &.special-1
                 bg-image('special_2')
             .text
               font-size: 12px
