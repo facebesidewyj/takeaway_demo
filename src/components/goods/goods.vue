@@ -2,7 +2,7 @@
     <div class="goods">
         <div class="menu-wrapper" ref="menuWrapper">
             <ul>
-                <li v-for="(item, index) in goods" class="menu-item" :class="{'current':currentIndex===index}">
+                <li v-for="(item, index) in goods" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index, $event)">
                     <span class="text border-1px">
                         <span v-show="item.type > 0" class="icon" :class="classMap[item.type]"></span>
                         {{item.name}}
@@ -57,14 +57,15 @@
     },
     computed: {
       currentIndex() {
-        for (var i = 0; i < this.listHeight.length; i++) {
+        for (let i = 0; i < this.listHeight.length; i++) {
           let height1 = this.listHeight[i];
           let height2 = this.listHeight[i + 1];
+
           if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
             return i;
           }
-          return 0;
         }
+        return 0;
       }
     },
     created() {
@@ -82,7 +83,9 @@
     },
     methods: {
       _initScroll() {
-        this.menuScroll = new BScroll(this.$refs.menuWrapper, {});
+        this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+          click: true
+        });
         this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
           probeType: 3
         });
@@ -95,13 +98,18 @@
         let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
         let height = 0;
         this.listHeight.push(height);
-        for (var i = 0; i < foodList.length; i++) {
+        for (let i = 0; i < foodList.length; i++) {
           let item = foodList[i];
           height += item.clientHeight;
 
           // 构造一个递增的高度区间数组
           this.listHeight.push(height);
         }
+      },
+      selectMenu(index, event) {
+        let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
+        let el = foodList[index];
+        this.foodsScroll.scrollToElement(el, 300);
       }
     }
   };
@@ -131,8 +139,8 @@
             z-index: 10
             margin-top: -1px
             background-color: white
-            font-weight: 700
             .text
+              font-weight: 700
               border-none()
           .icon
             display: inline-block
