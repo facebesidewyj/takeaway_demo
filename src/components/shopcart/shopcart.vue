@@ -15,6 +15,13 @@
         <div class="pay" :class="payClass">{{payDesc}}</div>
       </div>
     </div>
+    <div class="ball-container">
+        <div v-for="ball in balls" v-show="ball.show" class="ball">
+      <transition name="drop" v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:after-enter="afterEnter">
+          <div class="inner"></div>
+      </transition>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -35,6 +42,28 @@
         type: Number,
         default: 0
       }
+    },
+    data() {
+      return {
+        balls: [
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          }
+        ],
+        dropBalls: []
+      };
     },
     computed: {
       totalPrice() {
@@ -66,6 +95,31 @@
           return 'enough';
         }
         return 'not-enough';
+      }
+    },
+    methods: {
+      drop(element) {
+        for (let i = 0; i < this.balls.length; i++) {
+          let ball = this.balls[i];
+
+          if (!ball.show) {
+            ball.show = true;
+            ball.element = element;
+
+            // 将要下落的小球放入dropBall数组
+            this.dropBalls.push(ball);
+            return;
+          }
+        }
+      },
+      beforeEnter(el) {
+
+      },
+      enter(el) {
+
+      },
+      afterEnter(el) {
+
       }
     }
   };
@@ -158,4 +212,19 @@
           &.enough
             background: #00b43c
             color: #fff
+    .ball-container
+      .ball
+        position: fixed
+        left: 32px
+        bottom: 22px
+        z-index: 200
+        .inner
+          width: 16px
+          height: 16px
+          border-radius: 50%
+          color: rgb(0, 160, 220)
+          transition: all 0.4s
+        &.drop-enter-to, &.drop-leave
+        &.drop-leave-active, &.drop-enter-active
+          transition: all 0.4s
 </style>

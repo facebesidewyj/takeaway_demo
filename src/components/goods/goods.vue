@@ -29,7 +29,8 @@
                       <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.price}}</span>
                     </div>
                     <div class="cartcontrol-wrapper">
-                      <cartcontrol :food="food"></cartcontrol>
+                      <!-- v-on监听子组件传来的事件 -->
+                      <cartcontrol :food="food" v-on:cartAdd="_drop"></cartcontrol>
                     </div>
                   </div>
                 </li>
@@ -37,7 +38,7 @@
             </li>
           </ul>
         </div>
-        <shopcart :selectFoods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+        <shopcart ref="shopcart" :selectFoods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
     </div>
 </template>
 
@@ -128,6 +129,10 @@
         let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
         let el = foodList[index];
         this.foodsScroll.scrollToElement(el, 300);
+      },
+      _drop(target) {
+        // vue2.0 v-el与v-ref合并成ref，统一用$refs来调用
+        this.$refs.shopcart.drop(target);
       }
     },
     components: {
