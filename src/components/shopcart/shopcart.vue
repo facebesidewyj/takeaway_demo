@@ -16,13 +16,7 @@
       </div>
     </div>
     <div class="ball-container">
-<<<<<<< HEAD
       <transition name="drop" v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:after-enter="afterEnter" v-for="ball in balls" :key="ball.id">
-=======
-      <transition name="drop" v-on:before-enter="beforeEnter"
-        v-on:enter="enter" v-on:after-enter="afterEnter"
-        v-for="(ball,index) in balls">
->>>>>>> b1cb734f32a564711258fd3a9f9394539b8e3e05
         <div class="ball" v-show="ball.show">
           <div class="inner inner-hook"></div>
         </div>
@@ -125,7 +119,6 @@
       },
       beforeEnter(el) {
         let count = this.balls.length;
-<<<<<<< HEAD
 
         while (count--) {
           let ball = this.balls[count];
@@ -168,33 +161,6 @@
             // 告诉vue动画结束
             el.addEventListener('transitionend', done);
           });
-=======
-        while (count--) {
-          let ball = this.balls[count];
-          if (ball.show) {
-            let rect = ball.element.getBoundingClientRect();
-            let x = rect.left - 32;
-            let y = -(window.innerHeight - rect.top - 22);
-            el.style.display = '';
-            el.style.webkitTransform = `translate3d(0,${y}px,0)`;
-            el.style.transform = `translate3d(0,${y}px,0)`;
-            let inner = el.querySelector('.inner-hook');
-            inner.style.webkitTransform = `translate3d(${x}px,0,0)`;
-            inner.style.transform = `translate3d(${x}px,0,0)`;
-          }
-        }
-      },
-      enter(el) {
-        /* eslint "no-unused-expressions": 0 */
-        el.offsetHeight;
-        this.$nextTick(() => {
-          el.style.webkitTransform = 'translate3d(0,0,0)';
-          el.style.transform = 'translate3d(0,0,0)';
-          let inner = el.querySelector('.inner-hook');
-          inner.style.webkitTransform = 'translate3d(0,0,0)';
-          inner.style.transform = 'translate3d(0,0,0)';
-        });
->>>>>>> b1cb734f32a564711258fd3a9f9394539b8e3e05
       },
       afterEnter(el) {
         let ball = this.dropBalls.shift();
@@ -296,7 +262,6 @@
             color: #fff
     .ball-container
       .ball
-<<<<<<< HEAD
         position: fixed
         left: 32px
         bottom: 22px
@@ -309,18 +274,4 @@
           border-radius: 50%
           background: rgb(0, 160, 220)
           transition: all 0.4s linear
-=======
-        position fixed
-        left 32px
-        bottom 22px
-        z-index 200
-        &.drop-enter,&.drop-enter-active
-          transition all 0.4s cubic-bezier(0.49,-0.29,0.75,0.41)
-        .inner
-          width 16px
-          height 16px
-          border-radius 50%
-          background rgb(0,160,220)
-          transition all 0.4s linear
->>>>>>> b1cb734f32a564711258fd3a9f9394539b8e3e05
 </style>
