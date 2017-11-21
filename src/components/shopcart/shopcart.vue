@@ -16,11 +16,11 @@
       </div>
     </div>
     <div class="ball-container">
-        <div v-for="ball in balls" v-show="ball.show" class="ball">
-      <transition name="drop" v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:after-enter="afterEnter">
-          <div class="inner"></div>
-      </transition>
+      <transition name="drop" v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:after-enter="afterEnter" v-for="ball in balls" :key="ball.id">
+        <div class="ball" v-show="ball.show">
+          <div class="inner inner-hook"></div>
         </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -47,18 +47,23 @@
       return {
         balls: [
           {
+            id: 1,
             show: false
           },
           {
+            id: 2,
             show: false
           },
           {
+            id: 3,
             show: false
           },
           {
+            id: 4,
             show: false
           },
           {
+            id: 5,
             show: false
           }
         ],
@@ -113,13 +118,56 @@
         }
       },
       beforeEnter(el) {
+        let count = this.balls.length;
 
+        while (count--) {
+          let ball = this.balls[count];
+          if (ball.show) {
+            // 获得小球相对于视口的位置
+            let rect = ball.element.getBoundingClientRect();
+
+            // 获得x和y的偏移量
+            let x = rect.left - 32;
+            let y = -(window.innerHeight - rect.top - 22);
+
+            // 控制y方向的移动
+            el.style.display = '';
+            el.style.webkitTransform = `translate3d(0, ${y}px, 0)`;
+            el.style.transform = `translate3d(0, ${y}px, 0)`;
+
+            // 让innerBall控制x的移动
+            let innerBall = el.querySelector('.inner-hook');
+            innerBall.style.webkitTransform = `translate3d(${x}px, 0, 0)`;
+            innerBall.style.transform = `translate3d(${x}px, 0, 0)`;
+          }
+        }
       },
-      enter(el) {
+      enter(el, done) {
+        // 触发浏览器重绘
+        /* eslint-disable no-unused-expressions */
+        el.offsetHeight;
 
+        // 在启动应用之前修改下列属性
+        this.$nextTick(() => {
+            // 重置y方向
+            el.style.webkitTransform = 'translate3d(0,0,0)';
+            el.style.transform = 'translate3d(0,0,0)';
+
+            // 重置x方向
+            let innerBall = el.querySelector('.inner-hook');
+            innerBall.style.webkitTransform = 'translate3d(0,0,0)';
+            innerBall.style.transform = 'translate3d(0,0,0)';
+
+            // 告诉vue动画结束
+            el.addEventListener('transitionend', done);
+          });
       },
       afterEnter(el) {
-
+        let ball = this.dropBalls.shift();
+        if (ball) {
+          ball.show = false;
+          el.style.display = 'none';
+        }
       }
     }
   };
@@ -218,13 +266,12 @@
         left: 32px
         bottom: 22px
         z-index: 200
+        &.drop-enter,&.drop-enter-active
+          transition: all 0.4s cubic-bezier(0.49, -0.29, 0.75, 0.41)
         .inner
           width: 16px
           height: 16px
           border-radius: 50%
-          color: rgb(0, 160, 220)
-          transition: all 0.4s
-        &.drop-enter-to, &.drop-leave
-        &.drop-leave-active, &.drop-enter-active
-          transition: all 0.4s
+          background: rgb(0, 160, 220)
+          transition: all 0.4s linear
 </style>

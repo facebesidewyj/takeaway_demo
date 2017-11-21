@@ -131,8 +131,11 @@
         this.foodsScroll.scrollToElement(el, 300);
       },
       _drop(target) {
-        // vue2.0 v-el与v-ref合并成ref，统一用$refs来调用
-        this.$refs.shopcart.drop(target);
+        // 优化卡顿，异步执行下落动画
+        this.$nextTick(() => {
+          // vue2.0 v-el与v-ref合并成ref，统一用$refs来调用
+          this.$refs.shopcart.drop(target);
+        });
       }
     },
     components: {
