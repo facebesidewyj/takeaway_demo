@@ -98,6 +98,9 @@
         fold: true
       };
     },
+    created() {
+      this.$root.eventHub.$on('cartAdd', this.drop);
+    },
     computed: {
       totalPrice() {
         let total = 0;
