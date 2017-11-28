@@ -27,8 +27,8 @@
         } else {
           this.food.count++;
         }
-        // 向父组件传递事件
-        this.$root.eventHub.$emit('cartAdd', event.target);
+        // 发起事件广播
+        this.$emit('cartAdd', event.target);
       },
       decreaseCart() {
         if (this.food.count) {

@@ -18,14 +18,12 @@
 
 <script>
   import header from 'components/header/header.vue';
-  import Vue from 'vue';
 
   const ERR_OK = 0;
   export default{
     data() {
       return {
-        seller: {},
-        eventHub: new Vue()
+        seller: {}
       };
     },
     created() {

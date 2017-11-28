@@ -30,7 +30,7 @@
                     </div>
                     <div class="cartcontrol-wrapper">
                       <!-- v-on监听子组件传来的事件 -->
-                      <cartcontrol :food="food"></cartcontrol>
+                      <cartcontrol :food="food" v-on:cartAdd="_drop"></cartcontrol>
                     </div>
                   </div>
                 </li>
@@ -38,8 +38,8 @@
             </li>
           </ul>
         </div>
-        <shopcart :selectFoods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
-        <food :food="selectedFood" ref="foodInfo"></food>
+        <shopcart :selectFoods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" ref="shopCart"></shopcart>
+        <food :food="selectedFood" ref="foodInfo" v-on:cartAdd="_drop"></food>
     </div>
 </template>
 
@@ -48,12 +48,8 @@
   import shopcart from 'components/shopcart/shopcart';
   import cartcontrol from 'components/cartcontrol/cartcontrol';
   import food from 'components/food/food';
-  import Vue from 'vue';
 
   const ERR_NO = 0;
-
-  /* eslint-disable no-unused-vars */
-  // const eventHub = new Vue();
 
   export default {
     props: {
@@ -66,8 +62,7 @@
             goods: [],
             listHeight: [],
             scrollY: 0,
-            selectedFood: {},
-            eventHub: new Vue()
+            selectedFood: {}
         };
     },
     computed: {
@@ -142,7 +137,7 @@
         // 优化卡顿，异步执行下落动画
         this.$nextTick(() => {
           // vue2.0 v-el与v-ref合并成ref，统一用$refs来调用
-          this.$refs.shopcart.drop(target);
+          this.$refs.shopCart.drop(target);
         });
       },
       selectFood(food) {

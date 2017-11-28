@@ -98,9 +98,6 @@
         fold: true
       };
     },
-    created() {
-      this.$root.eventHub.$on('cartAdd', this.drop);
-    },
     computed: {
       totalPrice() {
         let total = 0;
@@ -155,15 +152,12 @@
       }
     },
     methods: {
-      drop(element) {
+      drop(el) {
         for (let i = 0; i < this.balls.length; i++) {
           let ball = this.balls[i];
-
           if (!ball.show) {
             ball.show = true;
-            ball.element = element;
-
-            // 将要下落的小球放入dropBall数组
+            ball.element = el;
             this.dropBalls.push(ball);
             return;
           }

@@ -17,7 +17,7 @@
           <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
         </div>
         <div class="cartcontrol-wrapper">
-          <cartcontrol :food="food"></cartcontrol>
+          <cartcontrol :food="food" v-on:cartAdd="transfer"></cartcontrol>
         </div>
         <transition name="fade">
           <div class="cart-btn" @click.stop.prevent="addFirst($event)" v-show="!food.count || food.count===0">加入购物车</div>
@@ -60,7 +60,11 @@
       },
       addFirst(event) {
         this.$set(this.food, 'count', 1);
-        this.$root.eventHub.$emit('cartAdd', event.target);
+        this.$emit('cartAdd', event.target);
+      },
+      transfer(target) {
+        // 继续向父组件传递事件
+        this.$emit('cartAdd', event.target);
       }
     },
     components: {
