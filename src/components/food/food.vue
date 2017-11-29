@@ -23,6 +23,12 @@
           <div class="cart-btn" @click.stop.prevent="addFirst($event)" v-show="!food.count || food.count===0">加入购物车</div>
         </transition>
       </div>
+      <splitBlock v-if="food.info"></splitBlock>
+      <div class="food-info" v-if="food.info">
+        <h1 class="title">商品介绍</h1>
+        <p class="info-content">{{food.info}}</p>
+      </div>
+      <splitBlock></splitBlock>
     </div>
   </transition>
 </template>
@@ -30,6 +36,7 @@
 <script>
   import BScroll from 'better-scroll';
   import cartcontrol from 'components/cartcontrol/cartcontrol';
+  import splitBlock from 'components/splitBlock/splitBlock';
 
   export default {
     props: {
@@ -68,7 +75,8 @@
       }
     },
     components: {
-      cartcontrol
+      cartcontrol,
+      splitBlock
     }
   };
 </script>
@@ -160,4 +168,16 @@
           opacity: 0
         &.fade-enter-to, &.fade-leave
           opacity: 1
+    .food-info
+      padding: 18px
+      .title
+        margin-bottom: 6px
+        font-size: 14px
+        color: rgb(7, 17, 27)
+      .info-content
+        padding: 0 8px
+        line-height: 24px
+        font-size: 12px
+        color: rgb(77, 85, 93)
+
 </style>
