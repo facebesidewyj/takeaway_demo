@@ -1,20 +1,33 @@
-# sell
+# 仿饿了么外卖平台
 
-> sell app
+后端转前端，入坑Vue，使用Vue2.0开发了一个高仿饿了么的商家模块来练手，现在把这个Demo开源出来，希望入坑前端的同学可以一起学习，一起进步，未完待续。。。
 
-## Build Setup
+> 有问题可以在Issues里提，大家一起讨论。
 
-``` bash
-# install dependencies
-npm install
+## 项目安装步骤
 
-# serve with hot reload at localhost:8080
-npm run dev
+1. git clone 到本地
+2. npm install 安装依赖
+3. npm run dev 启动本地服务
+4. npm run build 项目打包
 
-# build for production with minification
-npm run build
+## 用到的技术栈
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
- 
+1. vue相关：vue2.0、vue-cli、vuex、vue-router、vue-resource。
+2. 构建工具：webpack。
+3. 代码风格规范工具：eslint。
+4. JavaScript语法标准：ECMAScript 2015。
+5. CSS预处理：Stylus。
+6. 移动端滚动插件：better-scroll。
+
+## 实现的组件
+
+1. 商家列表header组件
+2. 商家商品列表组件
+3. 评价star组件
+4. 可伸缩使用flex布局的直线组件
+5. 购物车组件
+6. 购物车添加组件
+7. 商品详情组件
+
+## 项目截图
