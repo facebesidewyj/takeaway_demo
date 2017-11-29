@@ -32,4 +32,5 @@
 
 ## 项目截图
 
-![](https://github.com/facebesidewyj/takeaway_demo/blob/master/resource/img/Screenshot_20171129-140904.png) ![](https://github.com/facebesidewyj/takeaway_demo/blob/master/resource/img/Screenshot_20171129-140912.png)
+<img src="https://github.com/facebesidewyj/takeaway_demo/blob/master/resource/img/Screenshot_20171129-140904.png" width="40%"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://github.com/facebesidewyj/takeaway_demo/blob/master/resource/img/Screenshot_20171129-140912.png" width="40%"/>
