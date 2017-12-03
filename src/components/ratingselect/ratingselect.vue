@@ -1,17 +1,17 @@
 <template>
   <div class="ratingselect">
     <div class="ratingType border-1px">
-      <span class="block positive" :class="{'active': selectType === 2}">{{desc.all}}
-        <span class="count">11</span>
+      <span @click="select(2)" class="block positive" :class="{'active': selectType === 2}">{{desc.all}}
+        <span class="count">{{ratings.length}}</span>
       </span>
-      <span class="block positive" :class="{'active': selectType === 0}">{{desc.positive}}
-        <span class="count">11</span>
+      <span @click="select(0)" class="block positive" :class="{'active': selectType === 0}">{{desc.positive}}
+        <span class="count">{{positives.length}}</span>
       </span>
-      <span class="block negative" :class="{'active': selectType === 1}">{{desc.negative}}
-        <span class="count">11</span>
+      <span @click="select(1)" class="block negative" :class="{'active': selectType === 1}">{{desc.negative}}
+        <span class="count">{{negatives.length}}</span>
       </span>
     </div>
-    <div class="switch" :class="{'on':onlyContent === true}">
+    <div @click="toggleContent" class="switch" :class="{'on':onlyContent === true}">
       <i class="icon-check_circle"></i>
       <span class="text">只看有内容的评价</span>
     </div>
@@ -19,7 +19,8 @@
 </template>
 
 <script>
-  // const NEGATIVE = 1;
+  const NEGATIVE = 1;
+  const POSITIVE = 0;
   const ALL = 2;
   export default{
     props: {
@@ -46,6 +47,26 @@
             negative: '不满意'
           };
         }
+      }
+    },
+    computed: {
+      positives() {
+        return this.ratings.filter((rating) => {
+          return rating.rateType === POSITIVE;
+        });
+      },
+      negatives() {
+        return this.ratings.filter((rating) => {
+          return rating.rateType === NEGATIVE;
+        });
+      }
+    },
+    methods: {
+      select(type) {
+        this.selectType = type;
+      },
+      toggleContent() {
+        this.onlyContent = !this.onlyContent;
       }
     }
   };

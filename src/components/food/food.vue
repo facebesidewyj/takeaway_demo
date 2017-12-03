@@ -32,7 +32,7 @@
         <splitBlock></splitBlock>
         <div class="rating">
           <h1 class="title">商品评价</h1>
-          <ratingSelect :selectType="selectType" :onlyContent="onlyContent" :desc="desc" :ratings="food.ratings"></ratingSelect>
+          <ratingSelect :selectType="selectType" :onlyContent="onlyContent" :desc="desc" :ratings="food.ratings" v-on:ratingtypeSelect="ratingtypeSelect" v-on:toggleOnlyContent="toggleOnlyContent"></ratingSelect>
         </div>
       </div>
     </div>
@@ -45,7 +45,6 @@
   import splitBlock from 'components/splitBlock/splitBlock';
   import ratingSelect from 'components/ratingselect/ratingselect';
 
-// const NEGATIVE = 1;
   const ALL = 2;
 
   export default {
