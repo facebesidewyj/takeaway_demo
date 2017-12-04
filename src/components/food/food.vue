@@ -291,6 +291,5 @@
             .icon-thumb_up
               color: rgb(0, 160, 220)
             .icon-thumb_down
-              color: rgb(147, 153, 159)
-              
+              color: rgb(147, 153, 159)  
 </style>
