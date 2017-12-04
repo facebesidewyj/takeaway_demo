@@ -1,17 +1,17 @@
 <template>
   <div class="ratingselect">
     <div class="ratingType border-1px">
-      <span @click="select(2)" class="block positive" :class="{'active': selectType === 2}">{{desc.all}}
+      <span @click="select(2)" class="block positive" :class="{'active': selectTypeForSelf === 2}">{{desc.all}}
         <span class="count">{{ratings.length}}</span>
       </span>
-      <span @click="select(0)" class="block positive" :class="{'active': selectType === 0}">{{desc.positive}}
+      <span @click="select(0)" class="block positive" :class="{'active': selectTypeForSelf === 0}">{{desc.positive}}
         <span class="count">{{positives.length}}</span>
       </span>
-      <span @click="select(1)" class="block negative" :class="{'active': selectType === 1}">{{desc.negative}}
+      <span @click="select(1)" class="block negative" :class="{'active': selectTypeForSelf === 1}">{{desc.negative}}
         <span class="count">{{negatives.length}}</span>
       </span>
     </div>
-    <div @click="toggleContent" class="switch" :class="{'on':onlyContent === true}">
+    <div @click="toggleContent" class="switch" :class="{'on':onlyContentForSelf === true}">
       <i class="icon-check_circle"></i>
       <span class="text">只看有内容的评价</span>
     </div>
@@ -49,6 +49,12 @@
         }
       }
     },
+    data() {
+      return {
+        selectTypeForSelf: this.selectType,
+        onlyContentForSelf: this.onlyContent
+      };
+    },
     computed: {
       positives() {
         return this.ratings.filter((rating) => {
@@ -63,10 +69,13 @@
     },
     methods: {
       select(type) {
-        this.selectType = type;
+        // vue2移除了props的双向绑定，在组件内，不能修改由外层传来的props数据。
+        this.selectTypeForSelf = type;
+        this.$emit('ratingtypeSelect', type);
       },
       toggleContent() {
-        this.onlyContent = !this.onlyContent;
+        this.onlyContentForSelf = !this.onlyContentForSelf;
+        this.$emit('toggleOnlyContent', this.onlyContentForSelf);
       }
     }
   };

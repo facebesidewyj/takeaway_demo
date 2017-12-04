@@ -33,6 +33,22 @@
         <div class="rating">
           <h1 class="title">商品评价</h1>
           <ratingSelect :selectType="selectType" :onlyContent="onlyContent" :desc="desc" :ratings="food.ratings" v-on:ratingtypeSelect="ratingtypeSelect" v-on:toggleOnlyContent="toggleOnlyContent"></ratingSelect>
+          <div class="rating-wrapper">
+            <ul v-show="food.ratings && food.ratings.length">
+              <li v-show="needShow(rating.rateType, rating.text)" v-for="rating in food.ratings" class="rating-item border-1px">
+                <div class="user-info">
+                  <span class="username">{{rating.username}}</span>
+                  <img class="user-img" :src="rating.avatar" alt="用户头像" width="12" height="12">
+                </div>
+                <div class="rating-date">{{rating.rateTime}}</div>
+                <p class="rating-text">
+                  <i :class="{'icon-thumb_up':rating.rateType === 0, 'icon-thumb_down':rating.rateType === 1}"></i>
+                  {{rating.text}}
+                </p>
+              </li>
+            </ul>
+            <div class="no-rating" v-show="!food.ratings || food.ratings.length"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -91,6 +107,33 @@
       transfer(target) {
         // 继续向父组件传递事件
         this.$emit('cartAdd', event.target);
+      },
+      ratingtypeSelect(type) {
+        this.selectType = type;
+        // better-scroll重新计算高度
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
+      },
+      toggleOnlyContent(onlyContent) {
+        this.onlyContent = onlyContent;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
+      },
+      needShow(type, text) {
+        // 只看内容并且评论内容为空，则不显示
+        if (this.onlyContent && !text) {
+          return false;
+        }
+
+        // 显示所有
+        if (this.selectType === ALL) {
+          return true;
+        } else {
+          // 显示与高亮按钮相对应的
+          return type === this.selectType;
+        }
       }
     },
     components: {
@@ -102,6 +145,7 @@
 </script>
 
 <style lang="stylus" rel="sytlesheet/stylus">
+  @import '../../common/stylus/mixin.styl'
   .food-wrapper
     position: fixed
     left: 0
@@ -207,4 +251,45 @@
         font-size: 14px
         line-height: 14px
         color: rgb(7, 17, 27)
+      .rating-wrapper
+        padding: 0 18px
+        .rating-item
+          position: relative
+          padding: 16px 0
+          border-1px(rgba(7, 17, 27, 0.1))
+          .user-info
+            position: absolute
+            font-size: 0
+            right: 0
+            top: 16px
+            line-height: 12px
+            .username
+              display: inline-block
+              vertical-align: top
+              margin-right: 6px
+              font-size: 10px
+              color: rgb(147, 153, 159)
+            .user-img
+              display: inline-block
+              width: 12px
+              height: 12px
+              vertical-align: top
+              border-radius: 50%
+          .rating-date
+            margin-bottom: 6px
+            line-height: 12px
+            font-size: 10px
+            color: rgb(147, 153, 159)
+          .rating-text
+            line-height: 16px
+            font-size: 12px
+            color: rgb(7, 17, 27)
+            .icon-thumb_up, .icon-thumb_down
+              margin-right: 4px
+              line-height: 16px
+              font-size: 12px
+            .icon-thumb_up
+              color: rgb(0, 160, 220)
+            .icon-thumb_down
+              color: rgb(147, 153, 159)
 </style>
