@@ -15,7 +15,7 @@
             <li class="food-list food-list-hook" v-for="item in goods">
               <h1 class="title">{{item.name}}</h1>
               <ul>
-                <li class="food-item border-1px" v-for="food in item.foods">
+                <li class="food-item border-1px" @click="selectFood(food)" v-for="food in item.foods">
                   <div class="icon">
                     <img :src="food.icon" width="57" height="57" alt="商品图标">
                   </div>
@@ -26,7 +26,7 @@
                       <span>月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
                     </div>
                     <div class="price">
-                      <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.price}}</span>
+                      <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                     </div>
                     <div class="cartcontrol-wrapper">
                       <!-- v-on监听子组件传来的事件 -->
@@ -38,7 +38,8 @@
             </li>
           </ul>
         </div>
-        <shopcart ref="shopcart" :selectFoods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+        <shopcart :selectFoods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" ref="shopCart"></shopcart>
+        <food :food="selectedFood" ref="foodInfo" v-on:cartAdd="_drop"></food>
     </div>
 </template>
 
@@ -46,6 +47,7 @@
   import BScroll from 'better-scroll';
   import shopcart from 'components/shopcart/shopcart';
   import cartcontrol from 'components/cartcontrol/cartcontrol';
+  import food from 'components/food/food';
 
   const ERR_NO = 0;
 
@@ -59,7 +61,8 @@
         return {
             goods: [],
             listHeight: [],
-            scrollY: 0
+            scrollY: 0,
+            selectedFood: {}
         };
     },
     computed: {
@@ -134,13 +137,18 @@
         // 优化卡顿，异步执行下落动画
         this.$nextTick(() => {
           // vue2.0 v-el与v-ref合并成ref，统一用$refs来调用
-          this.$refs.shopcart.drop(target);
+          this.$refs.shopCart.drop(target);
         });
+      },
+      selectFood(food) {
+        this.selectedFood = food;
+        this.$refs.foodInfo.show();
       }
     },
     components: {
       shopcart,
-      cartcontrol
+      cartcontrol,
+      food
     }
   };
 </script>
@@ -236,7 +244,7 @@
               margin-right: 12px
           .price
             font-weight: 700
-            height-line: 24px
+            line-height: 24px
             margin-top: 6px
             .now
               margin-right: 8px
