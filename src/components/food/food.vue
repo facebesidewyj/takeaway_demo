@@ -40,14 +40,14 @@
                   <span class="username">{{rating.username}}</span>
                   <img class="user-img" :src="rating.avatar" alt="用户头像" width="12" height="12">
                 </div>
-                <div class="rating-date">{{rating.rateTime}}</div>
+                <div class="rating-date">{{rating.rateTime | formatDate}}</div>
                 <p class="rating-text">
                   <i :class="{'icon-thumb_up':rating.rateType === 0, 'icon-thumb_down':rating.rateType === 1}"></i>
                   {{rating.text}}
                 </p>
               </li>
             </ul>
-            <div class="no-rating" v-show="!food.ratings || food.ratings.length"></div>
+            <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
           </div>
         </div>
       </div>
@@ -60,6 +60,7 @@
   import cartcontrol from 'components/cartcontrol/cartcontrol';
   import splitBlock from 'components/splitBlock/splitBlock';
   import ratingSelect from 'components/ratingselect/ratingselect';
+  import util from '../../common/js/date.js';
 
   const ALL = 2;
 
@@ -134,6 +135,12 @@
           // 显示与高亮按钮相对应的
           return type === this.selectType;
         }
+      }
+    },
+    filters: {
+      formatDate(time) {
+        // 用filter来处理日期数据
+        return util.formatDate(time, 'yyyy-MM-dd hh:mm');
       }
     },
     components: {
@@ -292,4 +299,8 @@
               color: rgb(0, 160, 220)
             .icon-thumb_down
               color: rgb(147, 153, 159)
+        .no-rating
+          padding: 16px
+          font-size: 12px
+          color: rgb(147, 153, 159)
 </style>
