@@ -9,7 +9,7 @@
 1. git clone 到本地
 2. npm install 安装依赖
 3. npm run dev 启动本地服务
-4. npm run build 项目打包
+4. npm run build 项目打包 
 
 ## 用到的技术栈
 
