@@ -298,9 +298,13 @@
             .icon-thumb_up
               color: rgb(0, 160, 220)
             .icon-thumb_down
+<<<<<<< HEAD
               color: rgb(147, 153, 159)
         .no-rating
           padding: 16px
           font-size: 12px
           color: rgb(147, 153, 159)
+=======
+              color: rgb(147, 153, 159)  
+>>>>>>> 2a19d86839921371066eedbb1905a1276b4ee9f7
 </style>
