@@ -102,6 +102,13 @@
           // 显示与高亮按钮相对应的
           return type === this.selectType;
         }
+      },
+      _initBScroll() {
+        this.$nextTick(() => {
+          this.scroll = new BScroll(this.$refs.ratingsWrapper, {
+            click: true
+          });
+        });
       }
     },
     created() {
@@ -109,11 +116,7 @@
         response = response.body;
         if (response.errno === ERROR_OK) {
           this.ratings = response.data;
-          this.$nextTick(() => {
-            this.scroll = new BScroll(this.$refs.ratingsWrapper, {
-              click: true
-            });
-          });
+          this._initBScroll();
         }
       });
     },
