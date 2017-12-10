@@ -142,6 +142,7 @@
       },
       selectFood(food) {
         this.selectedFood = food;
+        // 调用子组件的方法
         this.$refs.foodInfo.show();
       }
     },
