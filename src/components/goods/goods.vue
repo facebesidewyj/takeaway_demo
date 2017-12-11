@@ -4,7 +4,7 @@
             <ul>
                 <li v-for="(item, index) in goods" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index, $event)">
                     <span class="text border-1px">
-                        <span v-show="item.type > 0" class="icon" :class="classMap[item.type]"></span>
+                        <icon class="icon" v-show="item.type > 0" :type="item.type"></icon>
                         {{item.name}}
                     </span>
                 </li>
@@ -48,6 +48,7 @@
   import shopcart from 'components/shopcart/shopcart';
   import cartcontrol from 'components/cartcontrol/cartcontrol';
   import food from 'components/food/food';
+  import icon from 'components/icon/icon';
 
   const ERR_NO = 0;
 
@@ -90,7 +91,6 @@
       }
     },
     created() {
-      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
       this.$http.get('/api/goods').then((response) => {
         response = response.body;
         if (response.errno === ERR_NO) {
@@ -149,7 +149,8 @@
     components: {
       shopcart,
       cartcontrol,
-      food
+      food,
+      icon
     }
   };
 </script>
@@ -188,16 +189,6 @@
             height 12px
             background-size: 12px 12px
             background-repeat: no-repeat
-            &.decrease
-              bg-image('decrease_3')
-            &.discount
-              bg-image('discount_3')
-            &.guarantee
-              bg-image('guarantee_3')
-            &.invoice
-              bg-image('invoice_3')
-            &.special
-              bg-image('special_3')
           .text
             display: table-cell
             width: 56px

@@ -37,7 +37,7 @@
         </div>
         <ul class="supports" v-if="seller.supports">
           <li class="supports-item border-1px" v-for="item in seller.supports">
-            <span class="icon" :class="classMap[item.type]"></span>
+            <icon class="icon" :type="item.type"></icon>
             <span class="supports-text">{{item.description}}</span>
           </li>
         </ul>
@@ -68,6 +68,7 @@
   import BScroll from 'better-scroll';
   import star from 'components/star/star';
   import splitBlock from 'components/splitBlock/splitBlock';
+  import icon from 'components/icon/icon';
 
   export default{
     props: {
@@ -82,9 +83,6 @@
       favouriteText() {
         return this.favourite ? '已收藏' : '收藏';
       }
-    },
-    created() {
-      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     },
     mounted: function() {
       this.$nextTick(() => {
@@ -113,7 +111,8 @@
     },
     components: {
       star,
-      splitBlock
+      splitBlock,
+      icon
     }
   };
 </script>
@@ -220,16 +219,6 @@
             vertical-align: top
             background-size: 16px 16px
             background-repeat: no-repeat
-            &.decrease
-              bg-image('decrease_4')
-            &.discount
-              bg-image('discount_4')
-            &.guarantee
-              bg-image('guarantee_4')
-            &.invoice
-              bg-image('invoice_4')
-            &.special
-              bg-image('special_4')
           .supports-text
             line-height: 16px
             font-size: 12px
@@ -270,5 +259,4 @@
         color: rgb(7, 17, 27)
         &:last-child
           border-none()
-
 </style>
