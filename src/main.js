@@ -7,12 +7,14 @@ import App from './App';
 import goods from 'components/goods/goods.vue';
 import ratings from 'components/ratings/ratings.vue';
 import seller from 'components/seller/seller.vue';
+import VueBus from './common/js/vue-bus.js';
 import 'common/stylus/index.styl';
 
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
+Vue.use(VueBus);
 
 let routes = [
   { path: '/goods', component: goods },
