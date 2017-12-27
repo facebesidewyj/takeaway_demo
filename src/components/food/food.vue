@@ -151,7 +151,7 @@
   };
 </script>
 
-<style lang="stylus" rel="sytlesheet/stylus">
+<style lang="stylus" rel="sytlesheet/stylus" scoped>
   @import '../../common/stylus/mixin.styl'
   .food-wrapper
     position: fixed

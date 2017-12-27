@@ -58,6 +58,7 @@
   import splitBlock from 'components/splitBlock/splitBlock';
   import ratingSelect from 'components/ratingselect/ratingselect';
   import util from '../../common/js/date.js';
+  import $ from '../../common/js/util.js';
 
   const ERROR_OK = 0;
   const ALL = 2;
@@ -112,8 +113,7 @@
       }
     },
     created() {
-      this.$http.get('/api/ratings').then((response) => {
-        response = response.body;
+      $.ajax.get('api/ratings').then((response) => {
         if (response.errno === ERROR_OK) {
           this.ratings = response.data;
           this._initBScroll();
@@ -247,6 +247,7 @@
                 font-size: 12px
                 color: rgb(0, 160, 220)
               .rating-tag
+                display: inline-block;
                 padding: 0 6px
                 margin-right: 8px
                 margin-bottom: 4px

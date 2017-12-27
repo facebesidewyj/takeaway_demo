@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import VueResource from 'vue-resource';
 import App from './App';
 import goods from 'components/goods/goods.vue';
 import ratings from 'components/ratings/ratings.vue';
@@ -13,7 +12,6 @@ import 'common/stylus/index.styl';
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
-Vue.use(VueResource);
 Vue.use(VueBus);
 
 let routes = [
@@ -28,12 +26,12 @@ let router = new VueRouter({
   linkActiveClass: 'active'
 });
 
-// 注册组件
-Vue.component('app', App);
-
 /* eslint "no-new": 0 */
 new Vue({
   el: '#app',
+  render: h => {
+    return h(App);
+  },
   router
 });
 

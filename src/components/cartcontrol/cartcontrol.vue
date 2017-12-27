@@ -27,8 +27,9 @@
         } else {
           this.food.count++;
         }
+
         // 发起事件广播
-        this.$emit('cartAdd', event.target);
+        this.$bus.$emit('cartAdd', event.target);
       },
       decreaseCart() {
         if (this.food.count) {
@@ -39,7 +40,7 @@
   };
 </script>
 
-<style lang="stylus" rel="sytlesheet/stylus">
+<style lang="stylus" rel="sytlesheet/stylus" scoped>
   .cartcontrol
     font-size: 0
     .cart-decrease

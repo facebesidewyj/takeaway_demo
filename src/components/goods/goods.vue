@@ -39,7 +39,7 @@
           </ul>
         </div>
         <shopcart :selectFoods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" ref="shopCart"></shopcart>
-        <food :food="selectedFood" ref="foodInfo" v-on:cartAdd="_drop"></food>
+        <food :food="selectedFood" ref="foodInfo"></food>
     </div>
 </template>
 
@@ -49,6 +49,7 @@
   import cartcontrol from 'components/cartcontrol/cartcontrol';
   import food from 'components/food/food';
   import icon from 'components/icon/icon';
+  import $ from '../../common/js/util.js';
 
   const ERR_NO = 0;
 
@@ -91,8 +92,7 @@
       }
     },
     created() {
-      this.$http.get('/api/goods').then((response) => {
-        response = response.body;
+      $.ajax.get('api/goods').then((response) => {
         if (response.errno === ERR_NO) {
             this.goods = response.data;
             this.$nextTick(() => {
@@ -100,6 +100,11 @@
               this._calculateHeight();
             });
         }
+      });
+    },
+    mounted() {
+      this.$bus.on('cartAdd', (target) => {
+        this._drop(target);
       });
     },
     methods: {

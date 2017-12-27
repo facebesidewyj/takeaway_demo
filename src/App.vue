@@ -20,8 +20,10 @@
 
 <script>
   import header from 'components/header/header.vue';
+  import $ from './common/js/util.js';
 
   const ERR_OK = 0;
+
   export default{
     data() {
       return {
@@ -29,8 +31,7 @@
       };
     },
     created() {
-      this.$http.get('/api/seller').then((response) => {
-        response = response.body;
+      $.ajax.get('api/seller').then((response) => {
         if (response.errno === ERR_OK) {
           this.seller = response.data;
         }
@@ -42,7 +43,7 @@
   };
 </script>
 
-<style lang="stylus" rel="sytlesheet/stylus">
+<style lang="stylus" rel="sytlesheet/stylus" scoped>
 @import 'common/stylus/mixin.styl'
 .tab
   display:flex
