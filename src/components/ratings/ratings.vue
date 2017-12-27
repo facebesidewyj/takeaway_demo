@@ -25,7 +25,7 @@
                 </div>
             </div>
             <splitBlock></splitBlock>
-            <ratingSelect :selectType="selectType" :onlyContent="onlyContent"  :ratings="ratings" v-on:ratingtypeSelect="ratingtypeSelect" v-on:toggleOnlyContent="toggleOnlyContent"></ratingSelect>
+            <ratingSelect :selectType="selectType" :onlyContent="onlyContent"  :ratings="ratings"></ratingSelect>
             <div class="rating-content">
               <ul>
                 <li class="rating-item" v-for="rating in ratings" v-show="needShow(rating.rateType, rating.text)">
@@ -75,6 +75,14 @@
         selectType: ALL,
         onlyContent: true
       };
+    },
+    mounted() {
+      this.$bus.on('ratingtypeSelect', (type) => {
+        this.ratingtypeSelect(type);
+      });
+      this.$bus.on('toggleOnlyContent', (onlyContent) => {
+        this.toggleOnlyContent(onlyContent);
+      });
     },
     methods: {
       ratingtypeSelect(type) {

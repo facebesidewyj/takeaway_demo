@@ -30,7 +30,7 @@
                     </div>
                     <div class="cartcontrol-wrapper">
                       <!-- v-on监听子组件传来的事件 -->
-                      <cartcontrol :food="food" v-on:cartAdd="_drop"></cartcontrol>
+                      <cartcontrol :food="food"></cartcontrol>
                     </div>
                   </div>
                 </li>

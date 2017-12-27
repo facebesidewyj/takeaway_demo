@@ -18,7 +18,7 @@
             <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
           </div>
           <div class="cartcontrol-wrapper">
-            <cartcontrol :food="food" v-on:cartAdd="transfer"></cartcontrol>
+            <cartcontrol :food="food"></cartcontrol>
           </div>
           <transition name="fade">
             <div class="cart-btn" @click.stop.prevent="addFirst($event)" v-show="!food.count || food.count===0">加入购物车</div>
@@ -32,7 +32,7 @@
         <splitBlock></splitBlock>
         <div class="rating">
           <h1 class="title">商品评价</h1>
-          <ratingSelect :selectType="selectType" :onlyContent="onlyContent" :desc="desc" :ratings="food.ratings" v-on:ratingtypeSelect="ratingtypeSelect" v-on:toggleOnlyContent="toggleOnlyContent"></ratingSelect>
+          <ratingSelect :selectType="selectType" :onlyContent="onlyContent" :desc="desc" :ratings="food.ratings"></ratingSelect>
           <div class="rating-wrapper">
             <ul v-show="food.ratings && food.ratings.length">
               <li v-show="needShow(rating.rateType, rating.text)" v-for="rating in food.ratings" class="rating-item border-1px">
@@ -82,13 +82,17 @@
         }
       };
     },
+    mounted() {
+      this.$bus.on('ratingtypeSelect', (type) => {
+        this.ratingtypeSelect(type);
+      });
+      this.$bus.on('toggleOnlyContent', (onlyContent) => {
+        this.toggleOnlyContent(onlyContent);
+      });
+    },
     methods: {
-      show() {
-        this.showFlag = true;
-        this.selectType = ALL;
-        this.onlyContent = true;
-        this.$nextTick(() => {
-          if (!this.scroll) {
+      _initScroll() {
+        if (!this.scroll) {
             // better-scroll原理是子元素要比父元素高
             this.scroll = new BScroll(this.$refs.foodWrapper, {
               click: true
@@ -96,6 +100,13 @@
           } else {
             this.scroll.refresh();
           }
+      },
+      show() {
+        this.showFlag = true;
+        this.selectType = ALL;
+        this.onlyContent = true;
+        this.$nextTick(() => {
+          this._initScroll();
         });
       },
       hide() {
@@ -103,23 +114,19 @@
       },
       addFirst(event) {
         this.$set(this.food, 'count', 1);
-        this.$emit('cartAdd', event.target);
-      },
-      transfer(target) {
-        // 继续向父组件传递事件
-        this.$emit('cartAdd', event.target);
+        this.$bus.emit('cartAdd', event.target);
       },
       ratingtypeSelect(type) {
         this.selectType = type;
         // better-scroll重新计算高度
         this.$nextTick(() => {
-          this.scroll.refresh();
+          this._initScroll();
         });
       },
       toggleOnlyContent(onlyContent) {
         this.onlyContent = onlyContent;
         this.$nextTick(() => {
-          this.scroll.refresh();
+          this._initScroll();
         });
       },
       needShow(type, text) {

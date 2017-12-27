@@ -35,7 +35,7 @@
                 <span class="name">{{food.name}}</span>
                 <span class="price">￥{{food.price * food.count}}</span>
                 <div class="cartcontrol-wrapper">
-                  <cartcontrol :food="food" v-on:cartAdd="drop"></cartcontrol>
+                  <cartcontrol :food="food"></cartcontrol>
                 </div>
               </li>
             </ul>
@@ -97,6 +97,11 @@
         dropBalls: [],
         fold: true
       };
+    },
+    mounted() {
+      this.$bus.on('cartAdd', (el) => {
+        this.drop(el);
+      });
     },
     computed: {
       totalPrice() {

@@ -71,11 +71,11 @@
       select(type) {
         // vue2移除了props的双向绑定，在组件内，不能修改由外层传来的props数据。
         this.selectTypeForSelf = type;
-        this.$emit('ratingtypeSelect', type);
+        this.$bus.emit('ratingtypeSelect', type);
       },
       toggleContent() {
         this.onlyContentForSelf = !this.onlyContentForSelf;
-        this.$emit('toggleOnlyContent', this.onlyContentForSelf);
+        this.$bus.emit('toggleOnlyContent', this.onlyContentForSelf);
       }
     }
   };

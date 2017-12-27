@@ -29,7 +29,7 @@
         }
 
         // 发起事件广播
-        this.$bus.$emit('cartAdd', event.target);
+        this.$bus.emit('cartAdd', event.target);
       },
       decreaseCart() {
         if (this.food.count) {
