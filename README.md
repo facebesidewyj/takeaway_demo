@@ -13,9 +13,9 @@
 
 ## 用到的技术栈
 
-1. vue相关：vue2.0、vue-cli、vue-router。
-2. 构建工具：webpack。
-3. 代码风格规范工具：eslint。
+1. Vue相关：Vue2.0、vue-cli、vue-router。
+2. 构建工具：Webpack。
+3. 代码风格规范工具：ESLint。
 4. JavaScript语法标准：ECMAScript 2015。
 5. CSS预处理：Stylus。
 6. 移动端滚动插件：better-scroll。
