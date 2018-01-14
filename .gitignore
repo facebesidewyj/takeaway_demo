@@ -1,6 +1,8 @@
 .DS_Store
 node_modules/
 dist/
+resource/img
+resource/标注
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
