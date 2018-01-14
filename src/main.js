@@ -7,9 +7,13 @@ import goods from 'components/goods/goods.vue';
 import ratings from 'components/ratings/ratings.vue';
 import seller from 'components/seller/seller.vue';
 import VueBus from './common/js/vue-bus.js';
+import FastClick from 'fastclick';
 import 'common/stylus/index.styl';
 
 Vue.config.productionTip = false;
+
+// 取消移动端300ms延迟
+FastClick.attach(document.body);
 
 Vue.use(VueRouter);
 Vue.use(VueBus);
